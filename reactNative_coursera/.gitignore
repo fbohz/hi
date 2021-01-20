@@ -1,4 +1,0 @@
-# ignore all node_modules folders/subfolders and include files named node_modules
-node_modules*/
-
-0.PracticeCode*/
