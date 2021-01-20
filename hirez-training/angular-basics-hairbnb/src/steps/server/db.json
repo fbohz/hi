@@ -1,0 +1,60 @@
+{
+  "listings": [
+    {
+      "id": "5",
+      "price": 290,
+      "location": "Madrid",
+      "hairStyle": "Cousin It",
+      "picture": "assets/images/madrid.jpg"
+    },
+    {
+      "id": "2",
+      "price": 264,
+      "location": "Copenhagen",
+      "hairStyle": "Boom Fox",
+      "picture": "assets/images/copenhagen.jpg"
+    },
+    {
+      "id": "3",
+      "price": 361,
+      "location": "Tokyo",
+      "hairStyle": "The Elvis",
+      "picture": "assets/images/tokyo.jpg"
+    },
+    {
+      "id": "4",
+      "price": 480,
+      "location": "London",
+      "hairStyle": "The Backstache",
+      "picture": "assets/images/london.jpg"
+    },
+    {
+      "id": "6",
+      "price": 197,
+      "location": "Mumbai",
+      "hairStyle": "Red Curry",
+      "picture": "assets/images/mumbai.jpg"
+    },
+    {
+      "id": "1",
+      "price": 155,
+      "location": "Belgrade",
+      "hairStyle": "The Sniper",
+      "picture": "assets/images/belgrade.jpg"
+    },
+    {
+      "id": "7",
+      "price": 163,
+      "location": "Sao Paulo",
+      "hairStyle": "Lizzard Blizzard",
+      "picture": "assets/images/saopaulo.jpg"
+    },
+    {
+      "id": "8",
+      "price": 69,
+      "location": "Reykjavik",
+      "hairStyle": "The Ghost",
+      "picture": "assets/images/iceland.jpg"
+    }
+  ]
+}

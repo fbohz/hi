@@ -1,0 +1,13 @@
+<div>
+
+  <div *ngIf="!isListVisible()">
+    <h4>NO LLAMAS!</h4>
+  </div>
+
+  <ng-container *ngIf="isListVisible()">
+    <div *ngFor="let llama of llamas">
+      {{ llama.name }}
+    </div>
+  </ng-container>
+
+</div>
