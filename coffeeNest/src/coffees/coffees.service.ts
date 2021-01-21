@@ -1,12 +1,16 @@
+import { MOCK_BRANDS, COFFEE_FACTORY_LOCATIONS } from './coffees.constants';
 import { Event } from './../events/entities/event.entity';
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
 import { Flavor } from './entities/flavor.entity';
 import { Coffee } from './entities/coffee.entity';
-import { Injectable, NotFoundException, Query } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Query, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+
+// default is singleton, here done for demo
+// @Injectable({scope: Scope.REQUEST})
 @Injectable()
 export class CoffeesService {
   // private coffees: Coffee[] = [
@@ -24,7 +28,10 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
-  ){}
+    @Inject(MOCK_BRANDS) mockBrands: string,
+  ){
+    console.log('Mock brands test: ', mockBrands)
+  }
 
   findAll(paginationQueryDto: PaginationQueryDto) {
     const { limit, offset } = paginationQueryDto;
