@@ -8,6 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
 
 // default is singleton, here done for demo
 // @Injectable({scope: Scope.REQUEST})
@@ -29,8 +31,20 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
     @Inject(MOCK_BRANDS) mockBrands: string,
+    private readonly configService: ConfigService,
+    // each namespace config exposes KEY prop 
+    @Inject(coffeesConfig.KEY)
+    private coffeesConfiguration: ConfigType<typeof coffeesConfig>, 
+
   ){
     console.log('Mock brands test: ', mockBrands)
+    // typing is optional and only to satisfy Ts compiler
+    // the second arg is the default one
+    const dbHost = this.configService.get<string>('DATABASE_HOST', 'localhost')
+    console.log('Config DB Host defined: ', dbHost ? `YES DEFINED is ${dbHost}` : "Not defined, fallback to 'localhost'")
+    
+    // const coffeesConfig = this.configService.get('coffees')
+    console.log('coffeesConfig: ', coffeesConfiguration.foo)
   }
 
   findAll(paginationQueryDto: PaginationQueryDto) {

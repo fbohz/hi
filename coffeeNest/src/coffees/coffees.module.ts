@@ -7,6 +7,8 @@ import { Module, Scope } from '@nestjs/common';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { Connection } from 'typeorm';
+import { ConfigModule } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
 
 // mock implementation for value based providers
 // class MockCoffeeService {}
@@ -49,7 +51,12 @@ export class CoffeeLocationsFactory {
     // }
   ],
   // providers: [{provide: CoffeesService, useValue: new MockCoffeeService()}],
-  imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event]), CoffeeLocationsFactory], // registering Coffee entity
+  // registering Coffee entity
+  imports: [ 
+      TypeOrmModule.forFeature([Coffee, Flavor, Event]), 
+      CoffeeLocationsFactory, 
+      ConfigModule.forFeature(coffeesConfig)
+  ], 
   exports: [CoffeesService, CoffeeLocationsFactory]
 })
 export class CoffeesModule {}
