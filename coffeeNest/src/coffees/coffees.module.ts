@@ -55,6 +55,7 @@ export class CoffeeLocationsFactory {
   imports: [ 
       TypeOrmModule.forFeature([Coffee, Flavor, Event]), 
       CoffeeLocationsFactory, 
+      // config namespace
       ConfigModule.forFeature(coffeesConfig)
   ], 
   exports: [CoffeesService, CoffeeLocationsFactory]
