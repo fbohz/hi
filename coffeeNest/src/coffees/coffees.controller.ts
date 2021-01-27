@@ -5,7 +5,13 @@ import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, SetMetadata, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Public } from 'src/common/decorators/public.decorator';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+/**
+ * Swagger Tags decorator.
+ * 💡 Note: Can also be done on an individual method-level if needed as well!
+ */
+@ApiTags('coffees-endpoints')
 // ValidationPipe only within this controller. And you can add specific configurations.
 @UsePipes(ValidationPipe)
 @Controller('coffees')
@@ -15,6 +21,9 @@ export class CoffeesController {
         private readonly coffeesService: CoffeesService
     ){}
     
+    /* short-hand versions are available as well */
+    // @ApiForbiddenResponse({ description: 'Forbidden.' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     // @SetMetadata('isPublic', true) // custom decorator is recommended see created decorator:
     @Public()
     // nested in coffee/all
