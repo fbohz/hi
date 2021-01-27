@@ -25,18 +25,20 @@ export class CoffeesService {
   // ];
 
   constructor(
+    private readonly connection: Connection,
     @InjectRepository(Coffee)
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
-    private readonly connection: Connection,
+    /* --- COMMENT OUT FOR BEFORE TESTING OR FIX FAILING TEST----
     @Inject(MOCK_BRANDS) mockBrands: string,
     private readonly configService: ConfigService,
     // each namespace config exposes KEY prop 
     @Inject(coffeesConfig.KEY)
     private coffeesConfiguration: ConfigType<typeof coffeesConfig>, 
-
+    */
   ){
+    /* --- COMMENT OUT FOR BEFORE TESTING OR FIX FAILING TEST ----
     console.log('Mock brands test: ', mockBrands)
     // typing is optional and only to satisfy Ts compiler
     // the second arg is the default one
@@ -45,6 +47,7 @@ export class CoffeesService {
     
     // const coffeesConfig = this.configService.get('coffees')
     console.log('coffeesConfig: ', coffeesConfiguration.foo)
+    */
   }
 
   findAll(paginationQueryDto: PaginationQueryDto) {
