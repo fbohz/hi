@@ -1,5 +1,5 @@
 import * as Joi from '@hapi/joi';
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,6 +7,8 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DynamicExampleModule } from './dynamic-example/dynamic-example.module';
 import { ConfigModule } from '@nestjs/config'
+import { APP_PIPE } from '@nestjs/core';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { ConfigModule } from '@nestjs/config'
       // ignoreEnvFile: true,
       validationSchema: Joi.object({
         DATABASE_HOST: Joi.required(),
-        DATABASE_PORT: Joi.number().default(5432),
+        DATABASE_PORT: Joi.number().default(5433),
       }),
     }),
     CoffeesModule,
@@ -31,9 +33,13 @@ import { ConfigModule } from '@nestjs/config'
     }),
     CoffeeRatingModule,
     DynamicExampleModule,
+    CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    // registers ValidationPipe from main.ts. Here global
+    AppService,
+  ],
 })
 export class AppModule {}
 
@@ -52,7 +58,7 @@ export class AppModule {}
 // }),
 
 
-// using .env file
+// using .env file - CAUTION: buggy
 // @Module({
 //   imports: [
 //     ConfigModule.forRoot({
@@ -82,6 +88,43 @@ export class AppModule {}
 // })
 // export class AppModule {}
 
+
+// global pipes
+// @Module({
+//   imports: [
+//     ConfigModule.forRoot({
+//       // envFilePath: '.environment',
+//       // ignoreEnvFile: true,
+//       validationSchema: Joi.object({
+//         DATABASE_HOST: Joi.required(),
+//         DATABASE_PORT: Joi.number().default(5432),
+//       }),
+//     }),
+//     CoffeesModule,
+//     TypeOrmModule.forRoot({
+//       type: 'postgres', // type of our database
+//       host: 'localhost', // database host
+//       port: 5433, // database host
+//       username: 'postgres', // username
+//       password: 'pass123', // user password
+//       database: 'postgres', // name of our database,
+//       autoLoadEntities: true, // models will be loaded automatically (you don't have to explicitly specify the entities: [] array)
+//       synchronize: true, // your entities will be synced with the database (ORM will map entity definitions to corresponding SQL tabled), every time you run the application (recommended: disable in the production)
+//     }),
+//     CoffeeRatingModule,
+//     DynamicExampleModule,
+//   ],
+//   controllers: [AppController],
+//   providers: [
+//     // registers ValidationPipe from main.ts. Here global
+//     AppService,
+//     { 
+//       provide: APP_PIPE,
+//       useClass: ValidationPipe
+//     }
+//   ],
+// })
+// export class AppModule {}
 
 // barebones
 

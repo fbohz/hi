@@ -1,9 +1,13 @@
+import { ParseIntPipe } from './../common/pipes/parse-int.pipe';
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, SetMetadata, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public.decorator';
 
+// ValidationPipe only within this controller. And you can add specific configurations.
+@UsePipes(ValidationPipe)
 @Controller('coffees')
 export class CoffeesController {
 
@@ -11,14 +15,18 @@ export class CoffeesController {
         private readonly coffeesService: CoffeesService
     ){}
     
-    // nested in coffee/flavors 
+    // @SetMetadata('isPublic', true) // custom decorator is recommended see created decorator:
+    @Public()
+    // nested in coffee/all
     @Get('all')
-    findAll(@Query() paginationQuery: PaginationQueryDto) {
+    async findAll(@Query() paginationQuery: PaginationQueryDto) {
+        // timeout interceptor change to 5000 to test
+        await new Promise(resolve => setTimeout(resolve, 0));
         return this.coffeesService.findAll(paginationQuery)
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string){
+    findOne(@Param('id', ParseIntPipe) id: string){
         return this.coffeesService.findOne(id)
     }
 
@@ -29,7 +37,7 @@ export class CoffeesController {
     }
     
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+    update(@Param('id') id: string, @Body(ValidationPipe) updateCoffeeDto: UpdateCoffeeDto) {
         return this.coffeesService.update(id, updateCoffeeDto)
     }
 
